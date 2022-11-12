@@ -1,5 +1,7 @@
 #!/usr/bin/python3
-"""All states Alchemy"""
+"""
+All states Alchemy
+"""
 
 from sys import argv
 from model_state import Base, State
