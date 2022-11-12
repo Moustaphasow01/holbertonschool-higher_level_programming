@@ -1,8 +1,10 @@
 #!/usr/bin/python3
+
 """
-Start link class to table in database with sqlalchemy
-script to list all `State` objects from database hbtn_0e_6_usa
+Script to list all states
+from database hbtn_0e_0usa
 """
+
 import sys
 from model_state import Base, State
 
