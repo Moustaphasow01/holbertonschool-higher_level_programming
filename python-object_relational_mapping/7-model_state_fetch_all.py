@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+
 """All states Alchemy"""
 
 from sys import argv
