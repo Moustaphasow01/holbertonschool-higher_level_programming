@@ -1,28 +1,34 @@
 #!/usr/bin/python3
-"""
-Start link class to table in database with sqlalchemy
-Script that prints the `State` Object with the 'name' passed
-as argument in command line.
-"""
-import sys
-from model_state import Base, State
+'''script that lists all states from the database hbtn_0e_0_usa'''
 
-from sqlalchemy import (create_engine)
-from sqlalchemy.orm import sessionmaker
+if __name__ == '__main__':
+    from sys import argv
+    import MySQLdb
 
+    # User credentials
+    user_name = argv[1]
+    user_pass = argv[2]
+    db_name = argv[3]
+    host_name = 'localhost'
+    host_port = 3306
 
-if __name__ == "__main__":
-    engine = create_engine('mysql+mysqldb://{}:{}@localhost/{}'.format(
-        sys.argv[1], sys.argv[2], sys.argv[3]), pool_pre_ping=True)
-    Base.metadata.create_all(engine)
+    # Connect to MySQL DB and create the cursor
+    db = MySQLdb.connect(host_name,
+                         user_name,
+                         user_pass,
+                         db_name,
+                         port=host_port)
+    cursor = db.cursor()
 
-    Session = sessionmaker(bind=engine)
-    session = Session()
-    found = False
-    for wanted_id in session.query(State).filter(State.name == sys.argv[4]):
-        if wanted_id:
-            found = True
-            print("{:d}".format(wanted_id.id))
-    if found is False:
-        print("Not found")
-    session.close()
+    # Make and tun query
+    sql = """SELECT * FROM states
+            ORDER BY id"""
+    cursor.execute(sql)
+    result = cursor.fetchall()
+
+    # print each elements in result
+    for each in result:
+        print(each)
+    # disconnect from server
+    cursor.close()
+    db.close()
